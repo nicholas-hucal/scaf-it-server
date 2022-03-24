@@ -24,12 +24,4 @@ router.get('/logout', (req, res) => {
     res.redirect(process.env.CLIENT_URL);
 });
 
-router.get('/success-callback', (req, res) => {
-    if (req.user) {
-        res.status(200).json(req.user);
-    } else {
-        res.status(401).json({ message: 'User is not logged in' });
-    }
-});
-
 module.exports = router;
