@@ -1,7 +1,7 @@
 const commonTags = require('common-tags');
 const writeToFile = require('../utils/writeToFile');
 
-exports.default = (block) => {
+module.exports = (block) => {
     const file = commonTags.html`
     import React from 'react';
     import './${block.componentName}.scss'; 

@@ -1,7 +1,7 @@
 const archiver = require('archiver');
 const fs = require('fs');
 
-exports.default = (jsFileInfo, scssFileInfo) => {
+module.exports = (jsFileInfo, scssFileInfo) => {
     // create a file to stream archive data to.
     const output = fs.createWriteStream(`./public/components/${jsFileInfo.componentName}.zip`);
     const archive = archiver('zip', {

@@ -1,7 +1,7 @@
 const commonTags = require('common-tags');
 const writeToFile = require('../utils/writeToFile');
 
-exports.default = (block) => {
+module.exports = (block) => {
     const file = commonTags.html`
     .${block.name} {
         ${block.modifiers.map(blockMod => {

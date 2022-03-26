@@ -1,10 +1,10 @@
 const helpers = require('../utils/helpers');
 
-exports.default = (name) => {
+module.exports = (name) => {
     return {
         name: name,
         type: 'main',
-        componentName: helpers.createComponentName(test),
+        componentName: helpers.createComponentName(name),
         modifiers: [
             {
                 id: 3434343,

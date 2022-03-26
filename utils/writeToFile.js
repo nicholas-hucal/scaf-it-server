@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-exports.default = (type, file, componentName, blockName) => {
+module.exports = (type, file, componentName, blockName) => {
     let fileName = `./temp/components/${blockName}.${type}`;
     fs.writeFileSync(fileName, file);
     return {
