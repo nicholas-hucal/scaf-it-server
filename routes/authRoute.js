@@ -1,27 +1,13 @@
-require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+const authController = require('../controllers/authController');
 
-router.get('/github', passport.authenticate('github'));
+router.get('/github', authController.connect);
 
-router.get('/github/callback',
-    passport.authenticate('github', {
-        failureRedirect: `${process.env.CLIENT_URL}/auth-fail`,
-    }),
-    (_req, res) => {
-        res.redirect(process.env.CLIENT_URL);
-    }
-);
+router.get('/github/callback', authController.auth, authController.callback);
 
-router.get('/profile', (req, res) => {
-    if (req.user === undefined) return res.status(401).json({ message: 'Unauthorized' });
-    res.status(200).json(req.user);
-});
+router.get('/profile', authController.getProfile);
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect(process.env.CLIENT_URL);
-});
+router.get('/logout', authController.logout);
 
 module.exports = router;
