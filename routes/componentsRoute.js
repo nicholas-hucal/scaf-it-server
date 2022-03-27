@@ -4,6 +4,6 @@ const componentsController = require('../controllers/componentsController.js');
 
 router
     .route('/')
-    .get(componentsController.index)
+    .post(componentsController.index)
 
 module.exports = router;
