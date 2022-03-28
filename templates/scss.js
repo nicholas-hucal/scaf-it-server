@@ -10,7 +10,7 @@ module.exports = (block) => {
         ${block.elements.map(el => {
             let elem = `&__${el.name} {\n`
             if (el.modifiers.length > 0) {
-                elem += '\t' +el.modifiers.map(mod => `\n\t&--${mod.name} {\n\t}`).join('\n\t') + '\n\n'
+                elem += '\t' +el.modifiers.map(mod => `\n\t&--${mod} {\n\t}`).join('\n\t') + '\n\n'
             }
             elem += '}\n';
             return elem;
