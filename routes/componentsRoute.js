@@ -11,7 +11,7 @@ router
         .post(componentsController.createBlock)
         .get(componentsController.getBlock)
         // .delete(componentsController.deleteBlock)
-        // .put(componentsController.updateBlock)
+        .put(componentsController.editBlock)
 
 router
     .route('/element')

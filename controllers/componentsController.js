@@ -14,7 +14,6 @@ exports.index = (req, res) => {
 exports.createBlock = (req, res) => {
     componentsModel.createBlock(req.body)
         .then(response => {
-            console.log(response)
             res.status(201).json(response)
         })
         .catch(error => {

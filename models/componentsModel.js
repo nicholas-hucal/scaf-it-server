@@ -13,6 +13,8 @@ exports.getBlock = (block_id) => {
         .then(res => {
             if (res[0].modName) {
                 res[0].modifiers = res.map(mod => mod.modName);
+            } else {
+                res[0].modifiers = []
             }
             delete res[0].modName;
             res[0].kind = 'block';
@@ -36,7 +38,7 @@ exports.createBlock = (block) => {
             const mods = block.modifiers.map(mod => {
                 return { block_id: block_id[0], name: mod }
             })
-            if (mods.length > 1) {
+            if (mods.length > 0) {
                 return knex('block_modifier')
                     .insert(mods)
                     .then(() => {
@@ -46,6 +48,40 @@ exports.createBlock = (block) => {
             } else {
                 return exports.getBlock(block_id[0])
             }
+        })
+        .then(block => {
+            return block;
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+exports.editBlock = (block) => {
+    return knex('block')
+        .where({ 'block.id': block.id })
+        .update({
+            user_id: block.user_id,
+            name: block.name,
+            type: block.type,
+            file_type: 'rafce',
+            color: '#fff'
+        })
+        .then(block_id => {
+            console.log(block_id)
+            // const mods = block.modifiers.map(mod => {
+            //     return { block_id: block_id[0], name: mod }
+            // })
+            // if (mods.length > 0) {
+            //     return knex('block_modifier')
+            //         .update(mods)
+            //         .then(() => {
+            //             return exports.getBlock(block_id[0])
+            //         })
+                    
+            // } else {
+            //     return exports.getBlock(block_id[0])
+            // }
         })
         .then(block => {
             return block;
