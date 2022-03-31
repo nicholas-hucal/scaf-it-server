@@ -10,14 +10,14 @@ router
     .route('/block')
         .post(componentsController.createBlock)
         .get(componentsController.getBlock)
-        .delete(componentsController.deleteBlock)
-        .update(componentsController.updateBlock)
+        // .delete(componentsController.deleteBlock)
+        // .put(componentsController.updateBlock)
 
 router
     .route('/element')
         .post(componentsController.createElement)
         .get(componentsController.getElement)
-        .delete(componentsController.deleteElement)
-        .update(componentsController.updateElement)
+        // .delete(componentsController.deleteElement)
+        // .put(componentsController.updateElement)
 
 module.exports = router;
