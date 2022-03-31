@@ -35,6 +35,10 @@ const homeRoute = require('./routes/homeRoute.js');
 app.use('/', homeRoute);
 const authRoute = require('./routes/authRoute.js');
 app.use('/auth', authRoute);
+const blockRoute = require('./routes/blockRoute.js');
+app.use('/block', blockRoute);
+const elementRoute = require('./routes/elementRoute.js');
+app.use('/element', elementRoute);
 const componentsRoute = require('./routes/componentsRoute.js');
 app.use('/components', componentsRoute);
 
