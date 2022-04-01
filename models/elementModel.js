@@ -22,7 +22,6 @@ exports.getElement = (element_id) => {
                 .where({[lookup]: element.id})
                 .then(res => {
                     element.parent_id = res[0][data]
-                    console.log(element)
                     return element;
                 })
         })
@@ -142,7 +141,6 @@ exports.createElementMods = (modifiers, element_id) => {
     const mods = modifiers.map(mod => {
         return { element_id: element_id, name: mod }
     })
-    console.log(mods);
     if (mods.length > 0) {
         return knex('element_modifier')
             .insert(mods)
