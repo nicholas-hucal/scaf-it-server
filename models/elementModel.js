@@ -1,55 +1,90 @@
 const knex = require('knex')(require('../knexfile.js').development);
 
-// exports.getBlock = (block_id) => {
-//     return knex('block')
-//         .select('block.*', 'block_modifier.name as modName')
-//         .where({ 'block.id': block_id })
-//         .leftJoin('block_modifier', 'block_modifier.block_id', '=', block_id)
-//         .then(res => {
-//             if (res[0].modName) {
-//                 res[0].modifiers = res.map(mod => mod.modName);
-//             } else {
-//                 res[0].modifiers = []
-//             }
-//             delete res[0].modName;
-//             res[0].kind = 'block';
-//             return res[0]
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
+exports.getElement = (element_id) => {
+    return knex('element')
+        .select('element.*', 'element_modifier.name as modName')
+        .where({ 'element.id': element_id })
+        .leftJoin('element_modifier', 'element_modifier.element_id', '=', element_id)
+        .then(res => {
+            if (res[0].modName) {
+                res[0].modifiers = res.map(mod => mod.modName);
+            } else {
+                res[0].modifiers = []
+            }
+            delete res[0].modName;
+            res[0].kind = 'element';
+            res[0].elements = [];
+            return res[0]
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 
-// exports.createBlock = (block) => {
-//     return knex('block')
-//         .insert({
-//             user_id: block.user_id,
-//             name: block.name,
-//             type: block.type,
-//             file_type: 'rafce'
-//         })
-//         .then(block_id => {
-//             return exports.createBlockMods(block.modifiers, block_id) 
-//         })
-//         .then(block_id => {
-//             return exports.getBlock(block_id[0])
-//         })
-//         .then(block => {
-//             return block;
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
+exports.createElement = (element) => {
+    return knex('element')
+        .insert({
+            name: element.name,
+            type: element.type,
+            sort: 0
+        })
+        .then(element_id => {
+            return exports.createElementMods(element.modifiers, element_id[0]) 
+        })
+        .then(element_id => {
+            if (element.parent.kind === 'block') {
+                return exports.createBlockElements(element.parent.user_id, element_id)
+            } else {
+                return exports.createElementElements(element.parent.user_id, element_id)
+            }
+        })
+        .then(element_id => {
+            return exports.getElement(element_id)
+        })
+        .then(element => {
+            return element;
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 
-// exports.deleteBlock = (block_id) => {
-//     return knex('block')
-//         .where({ 'id': block_id })
-//         .del()
-//         .then(() => {
-//             return {'message': 'succesfully deleted row'}
-//         })
-// }
+exports.createElementElements = (parent_id, child_id) => {
+    return knex('element_element')
+        .insert({
+            parent_id: parent_id,
+            child_id: child_id
+        })
+        .then(() => {
+            return child_id;
+        })
+        .catch(() => {
+            return false;
+        })
+}
+
+exports.createBlockElements = (block_id, element_id) => {
+    return knex('block_element')
+        .insert({
+            block_id: block_id,
+            element_id: element_id
+        })
+        .then(() => {
+            return element_id;
+        })
+        .catch(() => {
+            return false;
+        })
+}
+
+exports.deleteElement = (element_id) => {
+    return knex('element')
+        .where({ 'id': element_id })
+        .del()
+        .then(() => {
+            return {'message': 'succesfully deleted row'}
+        })
+}
 
 // exports.editBlock = (block) => {
 //     return knex('block')
@@ -89,17 +124,17 @@ const knex = require('knex')(require('../knexfile.js').development);
 //         })
 // }
 
-// exports.createBlockMods = (modifiers, block_id) => {
-//     const mods = modifiers.map(mod => {
-//         return { block_id: block_id, name: mod }
-//     })
-//     if (mods.length > 0) {
-//         return knex('block_modifier')
-//             .insert(mods)
-//             .then(() => {
-//                 return block_id
-//             })
-//     } else {
-//         return block_id
-//     }
-// }
+exports.createElementMods = (modifiers, element_id) => {
+    const mods = modifiers.map(mod => {
+        return { element_id: element_id, name: mod }
+    })
+    if (mods.length > 0) {
+        return knex('element_modifier')
+            .insert(mods)
+            .then(() => {
+                return element_id
+            })
+    } else {
+        return element_id
+    }
+}
