@@ -33,8 +33,7 @@ module.exports = (component) => {
             <${component.block.type} className="${component.block.name}">
                 ${component.elements.map((arr) => {
                     return createElements(arr, component.children)
-                }).join('\n')
-                }
+                }).join('\n')}
             </${component.block.type}>
         )
     }

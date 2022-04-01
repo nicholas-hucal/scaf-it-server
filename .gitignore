@@ -11,6 +11,7 @@
 # production
 /build
 /public/components
+/temp
 
 # misc
 .DS_Store
