@@ -12,7 +12,6 @@ exports.getBlock = (block_id) => {
                 res[0].modifiers = []
             }
             delete res[0].modName;
-            res[0].kind = 'block';
             return res[0]
         })
         .catch(err => {
@@ -26,7 +25,8 @@ exports.createBlock = (block) => {
             user_id: block.user_id,
             name: block.name,
             type: block.type,
-            file_type: 'rafce'
+            file_type: 'rafce',
+            kind: 'block'
         })
         .then(block_id => {
             return exports.createBlockMods(block.modifiers, block_id) 

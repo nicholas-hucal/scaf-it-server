@@ -14,6 +14,7 @@ exports.up = function(knex) {
         table.string('name', 255 ).notNullable();
         table.string('type', 255 ).notNullable();
         table.string('file_type', 255 ).notNullable();
+        table.string('kind', 255 ).notNullable().defaultTo('block');
         table
           .foreign('user_id')
           .references('id')
@@ -26,6 +27,7 @@ exports.up = function(knex) {
         table.string('name', 255 ).notNullable();
         table.string('type', 255 ).notNullable();
         table.integer('sort').unsigned().notNullable();
+        table.string('kind', 255 ).notNullable();
       })
       .createTable('block_element', (table) => {
         table.integer('block_id').unsigned().notNullable();

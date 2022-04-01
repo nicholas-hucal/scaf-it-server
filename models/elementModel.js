@@ -12,9 +12,22 @@ exports.getElement = (element_id) => {
                 res[0].modifiers = []
             }
             delete res[0].modName;
-            res[0].kind = 'element';
-            res[0].elements = [];
             return res[0]
+        })
+        .then(element => {
+            const table = element.kind === 'element' ? 'block_element' : 'element_element';
+            const lookup = element.kind === 'element' ? 'element_id' : 'child_id';
+            const data = element.kind === 'element' ? 'block_id' : 'parent_id';
+            return knex(table)
+                .where({[lookup]: element.id})
+                .then(res => {
+                    element.parent_id = res[0][data]
+                    console.log(element)
+                    return element;
+                })
+        })
+        .then(elem => {
+            return elem;
         })
         .catch(err => {
             console.log(err)
@@ -26,16 +39,17 @@ exports.createElement = (element) => {
         .insert({
             name: element.name,
             type: element.type,
-            sort: 0
+            sort: 0,
+            kind: element.kind
         })
         .then(element_id => {
             return exports.createElementMods(element.modifiers, element_id[0]) 
         })
         .then(element_id => {
-            if (element.parent.kind === 'block') {
-                return exports.createBlockElements(element.parent.user_id, element_id)
+            if (element.kind === 'element') {
+                return exports.createBlockElements(element.parent.id, element_id)
             } else {
-                return exports.createElementElements(element.parent.user_id, element_id)
+                return exports.createElementElements(element.parent.id, element_id)
             }
         })
         .then(element_id => {
@@ -128,6 +142,7 @@ exports.createElementMods = (modifiers, element_id) => {
     const mods = modifiers.map(mod => {
         return { element_id: element_id, name: mod }
     })
+    console.log(mods);
     if (mods.length > 0) {
         return knex('element_modifier')
             .insert(mods)
