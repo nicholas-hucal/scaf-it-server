@@ -99,43 +99,42 @@ exports.deleteElement = (element_id) => {
         })
 }
 
-// exports.editBlock = (block) => {
-//     return knex('block')
-//         .where({ 'block.id': block.id })
-//         .update({
-//             user_id: block.user_id,
-//             name: block.name,
-//             type: block.type,
-//             file_type: 'rafce',
-//         })
-//         .then(() => {
-//             return exports.deleteBlockMods(block.id)
-//         })
-//         .then(() => {
-//             return exports.createBlockMods(block.modifiers, block.id) 
-//         })
-//         .then(() => {
-//             return exports.getBlock(block.id);
-//         })
-//         .then(block => {
-//             return block;
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
+exports.editElement = (element) => {
+    return knex('element')
+        .where({ 'element.id': element.id })
+        .update({
+            name: element.name,
+            type: element.type,
+        })
+        .then(() => {
+            return exports.deleteElementMods(element.id)
+        })
+        .then(() => {
+            console.log(element.modifiers)
+            return exports.createElementMods(element.modifiers, element.id) 
+        })
+        .then(() => {
+            return exports.getElement(element.id);
+        })
+        .then(block => {
+            return block;
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 
-// exports.deleteBlockMods = (block_id) => {
-//     return knex('block_modifier')
-//         .where({ 'block_id': block_id })
-//         .del()
-//         .then(() => {
-//             return true
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
+exports.deleteElementMods = (element_id) => {
+    return knex('element_modifier')
+        .where({ 'element_id': element_id })
+        .del()
+        .then(() => {
+            return true
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 
 exports.createElementMods = (modifiers, element_id) => {
     const mods = modifiers.map(mod => {

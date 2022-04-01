@@ -21,6 +21,7 @@ exports.getElement = (req, res) => {
 }
 
 exports.editElement = (req, res) => {
+    console.log(req.body)
     elementModel.editElement(req.body)
         .then(response => {
             res.status(200).json(response)

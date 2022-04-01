@@ -29,10 +29,10 @@ exports.createBlock = (block) => {
             kind: 'block'
         })
         .then(block_id => {
-            return exports.createBlockMods(block.modifiers, block_id) 
+            return exports.createBlockMods(block.modifiers, block_id[0]) 
         })
         .then(block_id => {
-            return exports.getBlock(block_id[0])
+            return exports.getBlock(block_id)
         })
         .then(block => {
             return block;
@@ -93,6 +93,8 @@ exports.createBlockMods = (modifiers, block_id) => {
     const mods = modifiers.map(mod => {
         return { block_id: block_id, name: mod }
     })
+    //console.log(mods)
+    //handle empty mods before arrival at server
     if (mods.length > 0) {
         return knex('block_modifier')
             .insert(mods)
