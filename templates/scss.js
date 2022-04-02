@@ -17,7 +17,7 @@ module.exports = (component) => {
     const file = commonTags.html`
     .${component.block.name} {
         ${component.block.modifiers.map(blockMod => {
-            return `\n&--${blockMod.name} {\n}\n`
+            return `\n&--${blockMod} {\n}\n`
         }).join('\n')}
         ${filtered.map(el => {
             let elem = `&__${el.name} {\n`

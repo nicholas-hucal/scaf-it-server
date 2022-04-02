@@ -15,7 +15,7 @@ exports.getBlock = (block_id) => {
             return res[0]
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -38,7 +38,7 @@ exports.createBlock = (block) => {
             return block;
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -73,7 +73,7 @@ exports.editBlock = (block) => {
             return block;
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -85,7 +85,7 @@ exports.deleteBlockMods = (block_id) => {
             return true
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -93,8 +93,6 @@ exports.createBlockMods = (modifiers, block_id) => {
     const mods = modifiers.map(mod => {
         return { block_id: block_id, name: mod }
     })
-    //console.log(mods)
-    //handle empty mods before arrival at server
     if (mods.length > 0) {
         return knex('block_modifier')
             .insert(mods)

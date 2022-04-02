@@ -29,7 +29,7 @@ exports.getElement = (element_id) => {
             return elem;
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -58,7 +58,7 @@ exports.createElement = (element) => {
             return element;
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -97,6 +97,9 @@ exports.deleteElement = (element_id) => {
         .then(() => {
             return {'message': 'succesfully deleted row'}
         })
+        .catch(() => {
+            return {error: 'server'}
+        })
 }
 
 exports.editElement = (element) => {
@@ -110,7 +113,6 @@ exports.editElement = (element) => {
             return exports.deleteElementMods(element.id)
         })
         .then(() => {
-            console.log(element.modifiers)
             return exports.createElementMods(element.modifiers, element.id) 
         })
         .then(() => {
@@ -120,7 +122,7 @@ exports.editElement = (element) => {
             return block;
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 
@@ -132,7 +134,7 @@ exports.deleteElementMods = (element_id) => {
             return true
         })
         .catch(err => {
-            console.log(err)
+            return {error: 'server'}
         })
 }
 

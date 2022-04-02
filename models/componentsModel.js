@@ -15,7 +15,11 @@ exports.createArchive = (sentBlock) => {
             const rcc = createRcc(component);
             const scss = createScss(component);
             createZip(rcc, scss);
-            return `${process.env.DOWNLOAD_LINK}${component.componentName}.zip`
+            const file = `${process.env.DOWNLOAD_LINK}${component.componentName}.zip`;
+            return {file: file, component: component} 
+        })
+        .catch(err => {
+            return {error: 'server'}
         })
     }
 
@@ -67,5 +71,8 @@ exports.getComponent = (sentBlock) => {
         })
         .then(() => {
             return component;
+        })
+        .catch(err => {
+            return {error: 'server'}
         })
 }
