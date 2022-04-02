@@ -17,7 +17,7 @@ app.use(
 app.use(
     expressSession({
         secret: process.env.SESSION_SECRET,
-        resave: false,
+        resave: true,
         saveUninitialized: true
     })
 );
@@ -29,6 +29,19 @@ app.use(passport.session());
 passport.use(authModel.checkAddUser);
 passport.serializeUser(authModel.serializeUser);
 passport.deserializeUser(authModel.deserializeUser);
+
+// CHECK AUTH ON ROUTES
+app.use((req, res, next) => {
+    const reqParts = req.url.split('/')
+    if (reqParts[1] === 'auth' && (reqParts[2] === 'github' || reqParts[2] === 'profile' || reqParts[2] === 'logout')) {
+        next()
+    } else {
+        if(!req.isAuthenticated()) {
+            return res.status(401).json({message: "unauthorized please login"})
+        }
+        next()
+    }
+})
 
 // ROUTES
 const authRoute = require('./routes/authRoute.js');
