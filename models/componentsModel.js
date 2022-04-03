@@ -23,6 +23,17 @@ exports.createArchive = (sentBlock) => {
         })
     }
 
+exports.getComponentsByUserId = (userId) => {
+    return knex('block')
+        .where({'user_id': userId })
+        .then(res => {
+            return res
+        })
+        .catch(err => {
+            return {error: 'server'}
+        })
+}
+
 exports.getComponent = (sentBlock) => {
     let component = {block: {}, elements: [], children: []};
     return blockModel.getBlock(sentBlock.id)

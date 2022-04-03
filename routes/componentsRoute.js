@@ -4,10 +4,11 @@ const componentsController = require('../controllers/componentsController.js');
 
 router
     .route('/')
-        .post(componentsController.getComponent);
+        .post(componentsController.getComponent)
+        .get(componentsController.getComponentsByUserId)
 
 router
     .route('/create')
-        .post(componentsController.createArchive)
+        .post(componentsController.createArchive);
 
 module.exports = router;

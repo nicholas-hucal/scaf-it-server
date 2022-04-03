@@ -18,6 +18,23 @@ exports.getComponent = (req, res) => {
     }
 };
 
+exports.getComponentsByUserId = (req, res) => {
+    if (req.user) {
+        componentsModel.getComponentsByUserId(req.user.id)
+            .then(response => {
+                if (response.error) {
+                    return responses.server(res)
+                }
+                res.status(200).json(response);
+            })
+            .catch(err => {
+                responses.server(res)
+            })
+    } else {
+        return responses.notAuthorized(res);
+    }
+} 
+
 exports.createArchive = (req, res) => {
     if (validateComponent(req)) {
         componentsModel.createArchive(req.body)
