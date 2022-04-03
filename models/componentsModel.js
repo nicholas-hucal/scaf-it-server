@@ -11,10 +11,10 @@ exports.createArchive = (sentBlock) => {
     return exports.getComponent(sentBlock)
         .then(component => {
             component.componentName = helpers.createComponentName(component.block.name);
-            // const rafce = createRafce(component);
-            const rcc = createRcc(component);
+            const rafce = createRafce(component);
+            // const rcc = createRcc(component);
             const scss = createScss(component);
-            createZip(rcc, scss);
+            createZip(rafce, scss);
             const file = `${process.env.DOWNLOAD_LINK}${component.componentName}.zip`;
             return {file: file, component: component} 
         })
@@ -82,6 +82,18 @@ exports.getComponent = (sentBlock) => {
         })
         .then(() => {
             return component;
+        })
+        .catch(err => {
+            return {error: 'server'}
+        })
+}
+
+exports.deleteComponent = (sentBlockId) => {
+    return knex('block')
+        .where({ 'id': sentBlockId })
+        .del()
+        .then(() => {
+            return {id: sentBlockId}
         })
         .catch(err => {
             return {error: 'server'}

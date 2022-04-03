@@ -8,7 +8,11 @@ router
         .get(componentsController.getComponentsByUserId)
 
 router
+    .route('/:id')
+        .delete(componentsController.deleteComponent);
+        
+router
     .route('/create')
         .post(componentsController.createArchive);
-
+        
 module.exports = router;

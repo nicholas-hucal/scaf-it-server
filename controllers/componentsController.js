@@ -18,6 +18,23 @@ exports.getComponent = (req, res) => {
     }
 };
 
+exports.deleteComponent = (req, res) => {
+    if (req.params.id !== '') {
+        componentsModel.deleteComponent(req.params.id)
+            .then(response => {
+                if (response.error) {
+                    return responses.server(res)
+                }
+                res.status(200).json(response);
+            })
+            .catch(err => {
+                responses.server(res)
+            })
+    } else {
+        return responses.badRequest(res);
+    }
+};
+
 exports.getComponentsByUserId = (req, res) => {
     if (req.user) {
         componentsModel.getComponentsByUserId(req.user.id)
@@ -33,7 +50,7 @@ exports.getComponentsByUserId = (req, res) => {
     } else {
         return responses.notAuthorized(res);
     }
-} 
+}
 
 exports.createArchive = (req, res) => {
     if (validateComponent(req)) {
