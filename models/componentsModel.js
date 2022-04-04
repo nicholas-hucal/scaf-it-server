@@ -1,5 +1,6 @@
 const createRafce = require('../templates/rafce');
 const createRcc = require('../templates/rcc');
+const createIndex = require('../templates/base')
 const createScss = require('../templates/scss');
 const createZip = require('../utils/createZip');
 const helpers = require('../utils/helpers');
@@ -13,8 +14,9 @@ exports.createArchive = (sentBlock) => {
             component.componentName = helpers.createComponentName(component.block.name);
             const rafce = createRafce(component);
             // const rcc = createRcc(component);
+            const base = createIndex(component)
             const scss = createScss(component);
-            createZip(rafce, scss);
+            createZip(rafce, scss, base);
             const file = `${process.env.DOWNLOAD_LINK}${component.componentName}.zip`;
             return {file: file, component: component} 
         })
