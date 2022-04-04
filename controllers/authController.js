@@ -1,14 +1,15 @@
 const authModel = require('../models/authModel.js');
 const passport = require('passport');
+const config = require('../config/index.js'); 
 
 exports.connect = passport.authenticate('github');
 
 exports.auth = passport.authenticate('github', {
-    failureRedirect: `${process.env.CLIENT_URL}/error`,
+    failureRedirect: `${config.CLIENT_URL}/error`,
 });
 
 exports.callback = (_req, res) => {
-    res.redirect(`${process.env.CLIENT_URL}/editor`);
+    res.redirect(`${config.CLIENT_URL}/editor`);
 }
 
 exports.getProfile = (req, res) => {
@@ -18,5 +19,5 @@ exports.getProfile = (req, res) => {
 
 exports.logout = (req, res) => {
     req.logout();
-    res.redirect(process.env.CLIENT_URL);
+    res.redirect(config.CLIENT_URL);
 }
