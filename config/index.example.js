@@ -1,13 +1,13 @@
-exports.SESSION_SECRET = 'a48cfd314fe9d817054ae919ebba596789d5fafc507525f1b5461bc33c78b17f';
+exports.SESSION_SECRET = 'yourKeyGoesHere';
 exports.PORT = '8080';
 exports.API_URL =
     process.env.NODE_ENV === 'production'
-        ? 'https://express-bookshelf.herokuapp.com'
+        ? 'https://productionURLgoesHere'
         : `http://localhost:${exports.PORT}`;
 
 //Github
-exports.GITHUB_CLIENT_ID = 'bb12bf8c8f5526772c85';
-exports.GITHUB_CLIENT_SECRET = '0ad2f6cd27bf5b9fe8d5928d828540bd44958863';
+exports.GITHUB_CLIENT_ID = 'clientId';
+exports.GITHUB_CLIENT_SECRET = 'clientSecret';
 exports.GITHUB_CALLBACK_URL = `${exports.API_URL}/auth/github/callback`
 
 //React App
