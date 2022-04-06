@@ -25,6 +25,8 @@ SCAFit Server is the complementing app to provide the backend logic to it's comp
 
 To deploy this project download or clone the project locally.
 
+You will need the client app available [here](https://github.com/nicholas-hucal/scaf-it)
+
 ```cd``` to the project directory
 
 Run ```npm install``` to install dependencies
@@ -36,7 +38,8 @@ You will need to create a github application and get your clientId and clientSec
 
 Change the filename to .env once complete.
 
-```SESSION_SECRET=yourSecretGoesHere
+```
+SESSION_SECRET=yourSecretGoesHere
 PORT=8080
 API_URL=http://localhost:8080
 
@@ -58,7 +61,8 @@ Next run ```npx knex init``` to create a knexfile.js in the main directory
 
 Edit the knexfile with your; user, password and database details and change to this structure
 
-```module.exports = {
+```
+module.exports = {
   development: {
     client: 'mysql',
     connection: {
