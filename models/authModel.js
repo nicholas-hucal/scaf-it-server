@@ -1,11 +1,11 @@
+require('dotenv').config()
 const GitHubStrategy = require('passport-github2').Strategy;
 const knex = require('knex')(require('../knexfile.js').development);
-const config = require('../config/index.js'); 
 
 exports.checkAddUser = new GitHubStrategy({
-    clientID: config.GITHUB_CLIENT_ID,
-    clientSecret: config.GITHUB_CLIENT_SECRET,
-    callbackURL: config.GITHUB_CALLBACK_URL
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.GITHUB_CALLBACK_URL
 },
     (_accessToken, _refreshToken, profile, done) => {
         knex('user')

@@ -1,4 +1,3 @@
-const e = require('express');
 const blockModel = require('../models/blockModel.js');
 const responses = require('../utils/responses.js');
 

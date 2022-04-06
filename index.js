@@ -1,29 +1,29 @@
+require('dotenv').config()
 const express = require('express');
 const expressSession = require('express-session');
 const helmet = require('helmet');
-const config = require('./config/index.js'); 
 const cors = require('cors');
 const passport = require('passport');
 const authModel = require('./models/authModel.js');
 const app = express();
 
 //MIDDLEWARE
+app.use(express.static('./public'));
+app.use(express.json());
+app.use(helmet());
 app.use(
     cors({
-        origin: true,
+        origin: process.env.CLIENT_URL,
         credentials: true
     })
 );
 app.use(
     expressSession({
-        secret: config.SESSION_SECRET,
-        resave: true,
+        secret: process.env.SESSION_SECRET,
+        resave: false,
         saveUninitialized: true
     })
 );
-app.use(express.static('./public'));
-app.use(express.json());
-app.use(helmet());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(authModel.checkAddUser);
@@ -54,6 +54,6 @@ const componentsRoute = require('./routes/componentsRoute.js');
 app.use('/components', componentsRoute);
 
 // LISTEN
-app.listen(config.PORT || 8080, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log('Capstone Server Rolling');
 })

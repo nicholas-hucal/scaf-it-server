@@ -7,7 +7,6 @@ const helpers = require('../utils/helpers');
 const knex = require('knex')(require('../knexfile.js').development);
 const elementModel = require('../models/elementModel');
 const blockModel = require('../models/blockModel');
-const config = require('../config/index.js'); 
 
 exports.createArchive = (sentBlock) => {
     return exports.getComponent(sentBlock)
@@ -18,7 +17,7 @@ exports.createArchive = (sentBlock) => {
             const base = createIndex(component)
             const scss = createScss(component);
             createZip(rafce, scss, base);
-            const file = `${config.DOWNLOAD_LINK}${component.componentName}.zip`;
+            const file = `${process.env.DOWNLOAD_LINK}${component.componentName}.zip`;
             return {file: file, component: component} 
         })
         .catch(err => {
